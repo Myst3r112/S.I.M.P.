@@ -1,4 +1,4 @@
-use('SIMP');
+use ('SIMP')
 
 db.createCollection("Personas", {
     "capped": false,
@@ -68,7 +68,7 @@ db.createCollection("Personas", {
                         "bsonType": "object",
                         "required": ["idEspecialidad", "nombreEspecialidad"],
                         "properties": {
-                            "idEspecialidad": { "bsonType": "objectId" },
+                            "idEspecialidad": { "bsonType": "number" },
                             "nombreEspecialidad": { "bsonType": "string", "maxLength": 50 }
                         },
                         "additionalProperties": false
@@ -79,7 +79,7 @@ db.createCollection("Personas", {
                     "bsonType": "object",
                     "required": ["idArea", "nombreArea"],
                     "properties": {
-                        "idArea": { "bsonType": "objectId" },
+                        "idArea": { "bsonType": "number" },
                         "nombreArea": { "bsonType": "string", "maxLength": 50 },
                         "tipoArea": { "bsonType": "string", "maxLength": 50 }
                     },
@@ -94,7 +94,7 @@ db.createCollection("Personas", {
     "validationAction": "error"
 });
  
-db.createCollection("Reportes", {
+db.createCollection("Reportes", {   
     "capped": false,
     "validator": {
         "$jsonSchema": {
@@ -133,7 +133,7 @@ db.createCollection("Reportes", {
                     "bsonType": "object",
                     "required": ["idCategoria", "nombreCategoria"],
                     "properties": {
-                        "idCategoria": { "bsonType": "objectId" },
+                        "idCategoria": { "bsonType": "number" },
                         "nombreCategoria": { "bsonType": "string" }
                     },
                     "additionalProperties": false,
@@ -146,9 +146,8 @@ db.createCollection("Reportes", {
                 },
                 "ciudadano": {
                     "bsonType": "object",
-                    "required": ["idPersona", "dni"],
                     "properties": {
-                        "idPersona": { "bsonType": "objectId" },
+                        "idPersona": { "bsonType": "number" },
                         "dni": { "bsonType": "string", "maxLength": 8, "minLength": 8 },
                         "nombre": { "bsonType": "string" },
                         "apellido": { "bsonType": "string" }
@@ -160,7 +159,7 @@ db.createCollection("Reportes", {
                     "bsonType": "object",
                     "required": ["idMunicipalidad", "nombre"],
                     "properties": {
-                        "idMunicipalidad": { "bsonType": "objectId" },
+                        "idMunicipalidad": { "bsonType": "number" },
                         "nombre": { "bsonType": "string" }
                     },
                     "additionalProperties": false,
@@ -209,17 +208,17 @@ db.createCollection("Reportes", {
                     "bsonType": "array",
                     "items": {
                         "bsonType": "object",
-                        "required": ["idAsignacion", "fechaAsignacion", "fechaInicio"],
+                        "required": ["idAsignacion", "fechaAsignacion"],
                         "properties": {
-                            "idAsignacion": { "bsonType": "objectId" },
+                            "idAsignacion": { "bsonType": "number" },
                             "tecnico": {
                                 "bsonType": "object",
-                                "properties": { "idPersona": { "bsonType": "objectId" }, "nombre": { "bsonType": "string" } },
+                                "properties": { "idPersona": { "bsonType": "number" }, "nombre": { "bsonType": "string" } },
                                 "additionalProperties": false
                             },
                             "administrador": {
                                 "bsonType": "object",
-                                "properties": { "idPersona": { "bsonType": "objectId" }, "nombre": { "bsonType": "string" } },
+                                "properties": { "idPersona": { "bsonType": "number" }, "nombre": { "bsonType": "string" } },
                                 "additionalProperties": false
                             },
                             "fechaAsignacion": { "bsonType": "date" },
@@ -288,7 +287,7 @@ db.createCollection("Municipalidades", {
                         "bsonType": "object",
                         "required": ["idArea", "nombreArea"],
                         "properties": {
-                            "idArea": { "bsonType": "objectId" },
+                            "idArea": { "bsonType": "number" },
                             "nombreArea": { "bsonType": "string", "maxLength": 50 },
                             "tipoArea": { "bsonType": "string", "maxLength": 50 }
                         },
@@ -373,7 +372,7 @@ db.createCollection("Categorias", {
                         "bsonType": "object",
                         "required": ["idCategoria", "nombreCategoria"],
                         "properties": {
-                            "idCategoria": { "bsonType": "objectId" },
+                            "idCategoria": { "bsonType": "number" },
                             "nombreCategoria": { "bsonType": "string" },
                             "descripcion": { "bsonType": "string" }
                         },
