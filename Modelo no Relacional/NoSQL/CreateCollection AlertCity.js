@@ -1,4 +1,4 @@
-use ('SIMP')
+use ('SIMP');
 
 db.createCollection("Personas", {
     "capped": false,
@@ -6,384 +6,476 @@ db.createCollection("Personas", {
         "$jsonSchema": {
             "bsonType": "object",
             "title": "Personas",
-            "required": ["nombre", "apellido", "DNI", "fechaRegistro", "rol"],
             "properties": {
                 "_id": {
-                    "bsonType": "objectId",
-                    "description": "Identificador único de la persona"
+                    "bsonType": "objectId"
+                },
+                "idPersona": {
+                    "bsonType": "objectId"
                 },
                 "nombre": {
                     "bsonType": "string",
-                    "maxLength": 50,
-                    "description": "Nombre de la persona"
+                    "maxLength": 50
                 },
                 "apellido": {
                     "bsonType": "string",
-                    "maxLength": 50,
-                    "description": "Apellido de la persona"
+                    "maxLength": 50
                 },
                 "DNI": {
                     "bsonType": "string",
                     "maxLength": 8,
-                    "minLength": 8,
-                    "description": "Documento Nacional de Identidad (8 caracteres)"
+                    "minLength": 8
                 },
                 "direccion": {
                     "bsonType": "string",
-                    "maxLength": 150,
-                    "description": "Dirección de residencia"
+                    "maxLength": 150
                 },
                 "fechaRegistro": {
-                    "bsonType": "date",
-                    "description": "Fecha de registro en el sistema"
+                    "bsonType": "date"
                 },
                 "telefonoPersona": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "string",
                         "maxLength": 15
-                    },
-                    "description": "Lista de teléfonos de contacto"
+                    }
                 },
                 "correoPersona": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "string",
                         "maxLength": 100
-                    },
-                    "description": "Lista de correos electrónicos"
+                    }
                 },
                 "rol": {
                     "bsonType": "string",
-                    "enum": ["Ciudadano", "Administrativo", "Tecnico"],
-                    "description": "Rol asignado en el sistema"
+                    "enum": [
+                        "Ciudadano",
+                        "Administrativo",
+                        "Tecnico"
+                    ]
                 },
                 "disponibilidad": {
-                    "bsonType": "bool",
-                    "description": "Disponibilidad del técnico (true/false)"
+                    "bsonType": "bool"
                 },
                 "especialidades": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "object",
-                        "required": ["idEspecialidad", "nombreEspecialidad"],
                         "properties": {
-                            "idEspecialidad": { "bsonType": "number" },
-                            "nombreEspecialidad": { "bsonType": "string", "maxLength": 50 }
+                            "idEspecialidad": {
+                                "bsonType": "number"
+                            },
+                            "nombreEspecialidad": {
+                                "bsonType": "string",
+                                "maxLength": 50
+                            }
                         },
                         "additionalProperties": false
-                    },
-                    "description": "Especialidades asignadas al técnico"
+                    }
                 },
                 "area": {
                     "bsonType": "object",
-                    "required": ["idArea", "nombreArea"],
                     "properties": {
-                        "idArea": { "bsonType": "number" },
-                        "nombreArea": { "bsonType": "string", "maxLength": 50 },
-                        "tipoArea": { "bsonType": "string", "maxLength": 50 }
+                        "idArea": {
+                            "bsonType": "number"
+                        },
+                        "nombreArea": {
+                            "bsonType": "string",
+                            "maxLength": 50
+                        },
+                        "tipoArea": {
+                            "bsonType": "string",
+                            "maxLength": 50
+                        }
                     },
-                    "additionalProperties": false,
-                    "description": "Área municipal a la que pertenece"
+                    "additionalProperties": false
                 }
             },
             "additionalProperties": false
         }
     },
-    "validationLevel": "strict",
-    "validationAction": "error"
+    "validationLevel": "off",
+    "validationAction": "warn"
 });
- 
-db.createCollection("Reportes", {   
+
+
+
+
+db.createCollection("Reportes", {
     "capped": false,
     "validator": {
         "$jsonSchema": {
             "bsonType": "object",
             "title": "Reportes",
-            "required": ["titulo", "descripcion", "nivelUrgencia", "esAnonimo", "fechaReporte", "estadoActual", "ubicacion"],
             "properties": {
                 "_id": {
-                    "bsonType": "objectId",
-                    "description": "Identificador único del reporte"
+                    "bsonType": "objectId"
+                },
+                "idReporte": {
+                    "bsonType": "objectId"
                 },
                 "titulo": {
                     "bsonType": "string",
-                    "maxLength": 50,
-                    "description": "Título corto de la incidencia"
+                    "maxLength": 50
                 },
                 "descripcion": {
                     "bsonType": "string",
-                    "maxLength": 500,
-                    "description": "Detalle explicativo del reporte"
+                    "maxLength": 500
                 },
                 "nivelUrgencia": {
                     "bsonType": "string",
-                    "enum": ["Baja", "Media", "Alta"],
-                    "description": "Nivel de urgencia asignado"
+                    "enum": [
+                        "Baja",
+                        "Media",
+                        "Alta"
+                    ]
                 },
                 "esAnonimo": {
-                    "bsonType": "bool",
-                    "description": "Indica si el ciudadano reporta de forma anónima"
+                    "bsonType": "bool"
                 },
                 "fechaReporte": {
-                    "bsonType": "date",
-                    "description": "Fecha de creación del reporte"
+                    "bsonType": "date"
                 },
                 "categoria": {
                     "bsonType": "object",
-                    "required": ["idCategoria", "nombreCategoria"],
                     "properties": {
-                        "idCategoria": { "bsonType": "number" },
-                        "nombreCategoria": { "bsonType": "string" }
+                        "idCategoria": {
+                            "bsonType": "number"
+                        },
+                        "nombreCategoria": {
+                            "bsonType": "string"
+                        }
                     },
-                    "additionalProperties": false,
-                    "description": "Categoría principal de la incidencia"
+                    "additionalProperties": false
                 },
                 "estadoActual": {
                     "bsonType": "string",
-                    "enum": ["Pendiente", "En Proceso", "Finalizado", "Observado"],
-                    "description": "Estado actual de atención del reporte"
+                    "enum": [
+                        "Pendiente",
+                        "En Proceso",
+                        "Finalizado",
+                        "Observado"
+                    ]
                 },
                 "ciudadano": {
                     "bsonType": "object",
                     "properties": {
-                        "idPersona": { "bsonType": "number" },
-                        "dni": { "bsonType": "string", "maxLength": 8, "minLength": 8 },
-                        "nombre": { "bsonType": "string" },
-                        "apellido": { "bsonType": "string" }
+                        "idPersona": {
+                            "bsonType": "objectId"
+                        },
+                        "dni": {
+                            "bsonType": "string",
+                            "maxLength": 8,
+                            "minLength": 8
+                        },
+                        "nombre": {
+                            "bsonType": "string"
+                        },
+                        "apellido": {
+                            "bsonType": "string"
+                        }
                     },
-                    "additionalProperties": false,
-                    "description": "Datos básicos del ciudadano que reporta"
+                    "additionalProperties": false
                 },
                 "municipalidad": {
                     "bsonType": "object",
-                    "required": ["idMunicipalidad", "nombre"],
                     "properties": {
-                        "idMunicipalidad": { "bsonType": "number" },
-                        "nombre": { "bsonType": "string" }
+                        "idMunicipalidad": {
+                            "bsonType": "objectId"
+                        },
+                        "nombre": {
+                            "bsonType": "string"
+                        }
                     },
-                    "additionalProperties": false,
-                    "description": "Municipalidad encargada del caso"
+                    "additionalProperties": false
                 },
                 "ubicacion": {
                     "bsonType": "object",
-                    "required": ["direccion", "longitud", "latitud"],
                     "properties": {
-                        "direccion": { "bsonType": "string", "maxLength": 150 },
-                        "longitud": { "bsonType": "double" },
-                        "latitud": { "bsonType": "double" }
+                        "direccion": {
+                            "bsonType": "string",
+                            "maxLength": 150
+                        },
+                        "longitud": {
+                            "bsonType": "double"
+                        },
+                        "latitud": {
+                            "bsonType": "double"
+                        }
                     },
-                    "additionalProperties": false,
-                    "description": "Coordenadas geográficas y dirección de la incidencia"
+                    "additionalProperties": false
                 },
                 "evidencias": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "object",
-                        "required": ["tipoArchivo", "urlArchivo", "fechaCarga"],
                         "properties": {
-                            "tipoArchivo": { "bsonType": "string", "enum": ["Foto", "Video"] },
-                            "urlArchivo": { "bsonType": "string", "maxLength": 150 },
-                            "fechaCarga": { "bsonType": "date" }
+                            "tipoArchivo": {
+                                "bsonType": "string",
+                                "enum": [
+                                    "Foto",
+                                    "Video"
+                                ]
+                            },
+                            "urlArchivo": {
+                                "bsonType": "string",
+                                "maxLength": 150
+                            },
+                            "fechaCarga": {
+                                "bsonType": "date"
+                            }
                         },
                         "additionalProperties": false
-                    },
-                    "description": "Archivos multimedia adjuntos como prueba"
+                    }
                 },
                 "historialEstados": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "object",
-                        "required": ["estadoAnterior", "estadoNuevo", "fechaCambio"],
                         "properties": {
-                            "estadoAnterior": { "bsonType": "string" },
-                            "estadoNuevo": { "bsonType": "string" },
-                            "fechaCambio": { "bsonType": "date" }
+                            "estadoAnterior": {
+                                "bsonType": "string"
+                            },
+                            "estadoNuevo": {
+                                "bsonType": "string"
+                            },
+                            "fechaCambio": {
+                                "bsonType": "date"
+                            }
                         },
                         "additionalProperties": false
-                    },
-                    "description": "Línea de tiempo de los cambios de estado"
+                    }
                 },
                 "asignaciones": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "object",
-                        "required": ["idAsignacion", "fechaAsignacion"],
                         "properties": {
-                            "idAsignacion": { "bsonType": "number" },
+                            "idAsignacion": {
+                                "bsonType": "number"
+                            },
                             "tecnico": {
                                 "bsonType": "object",
-                                "properties": { "idPersona": { "bsonType": "number" }, "nombre": { "bsonType": "string" } },
+                                "properties": {
+                                    "idPersona": {
+                                        "bsonType": "number"
+                                    },
+                                    "nombre": {
+                                        "bsonType": "string"
+                                    }
+                                },
                                 "additionalProperties": false
                             },
                             "administrador": {
                                 "bsonType": "object",
-                                "properties": { "idPersona": { "bsonType": "number" }, "nombre": { "bsonType": "string" } },
+                                "properties": {
+                                    "idPersona": {
+                                        "bsonType": "number"
+                                    },
+                                    "nombre": {
+                                        "bsonType": "string"
+                                    }
+                                },
                                 "additionalProperties": false
                             },
-                            "fechaAsignacion": { "bsonType": "date" },
-                            "fechaInicio": { "bsonType": "date" },
-                            "fechaFin": { "bsonType": "date" },
-                            "instrucciones": { "bsonType": "string", "maxLength": 1000 }
+                            "fechaAsignacion": {
+                                "bsonType": "date"
+                            },
+                            "fechaInicio": {
+                                "bsonType": "date"
+                            },
+                            "fechaFin": {
+                                "bsonType": "date"
+                            },
+                            "instrucciones": {
+                                "bsonType": "string",
+                                "maxLength": 1000
+                            }
                         },
                         "additionalProperties": false
-                    },
-                    "description": "Historial de técnicos asignados a resolver el caso"
+                    }
                 }
             },
             "additionalProperties": false
         }
     },
-    "validationLevel": "strict",
-    "validationAction": "error"
+    "validationLevel": "off",
+    "validationAction": "warn"
 });
- 
+
+
+
+
 db.createCollection("Municipalidades", {
     "capped": false,
     "validator": {
         "$jsonSchema": {
             "bsonType": "object",
             "title": "Municipalidades",
-            "required": ["nombre", "distrito", "ruc"],
             "properties": {
                 "_id": {
-                    "bsonType": "objectId",
-                    "description": "Identificador único de la municipalidad"
+                    "bsonType": "objectId"
+                },
+                "idMunicipalidad": {
+                    "bsonType": "objectId"
                 },
                 "nombre": {
                     "bsonType": "string",
-                    "maxLength": 50,
-                    "description": "Nombre de la entidad municipal"
+                    "maxLength": 50
                 },
                 "distrito": {
                     "bsonType": "string",
-                    "maxLength": 50,
-                    "description": "Distrito de jurisdicción"
+                    "maxLength": 50
                 },
                 "direccion": {
                     "bsonType": "string",
-                    "maxLength": 150,
-                    "description": "Dirección de la sede central"
+                    "maxLength": 150
                 },
                 "ruc": {
                     "bsonType": "string",
-                    "maxLength": 11,
-                    "minLength": 11,
-                    "description": "Registro Único de Contribuyentes (11 dígitos)"
+                    "maxLength": 11
                 },
                 "telefonoMunicipalidad": {
                     "bsonType": "array",
-                    "items": { "bsonType": "string", "maxLength": 15 },
-                    "description": "Central telefónica"
+                    "additionalItems": true,
+                    "items": {
+                        "bsonType": "string",
+                        "maxLength": 15,
+                        "minLength": 0
+                    }
                 },
                 "correoMunicipalidad": {
                     "bsonType": "array",
-                    "items": { "bsonType": "string", "maxLength": 100 },
-                    "description": "Correos institucionales"
+                    "additionalItems": true,
+                    "items": {
+                        "bsonType": "string",
+                        "maxLength": 100
+                    }
                 },
                 "area": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "object",
-                        "required": ["idArea", "nombreArea"],
                         "properties": {
-                            "idArea": { "bsonType": "number" },
-                            "nombreArea": { "bsonType": "string", "maxLength": 50 },
-                            "tipoArea": { "bsonType": "string", "maxLength": 50 }
+                            "idArea": {
+                                "bsonType": "number"
+                            },
+                            "nombreArea": {
+                                "bsonType": "string",
+                                "maxLength": 50
+                            },
+                            "tipoArea": {
+                                "bsonType": "string",
+                                "maxLength": 50
+                            }
                         },
                         "additionalProperties": false
-                    },
-                    "description": "Lista de áreas operativas de la municipalidad"
+                    }
                 }
             },
             "additionalProperties": false
         }
     },
-    "validationLevel": "strict",
-    "validationAction": "error"
+    "validationLevel": "off",
+    "validationAction": "warn"
 });
- 
+
+
+
+
 db.createCollection("Notificaciones", {
     "capped": false,
     "validator": {
         "$jsonSchema": {
             "bsonType": "object",
             "title": "Notificaciones",
-            "required": ["idReporte", "idPersona", "mensaje", "fechaEnvio", "leido"],
             "properties": {
                 "_id": {
-                    "bsonType": "objectId",
-                    "description": "Identificador único de la notificación"
+                    "bsonType": "objectId"
+                },
+                "idNotificacion": {
+                    "bsonType": "objectId"
                 },
                 "idReporte": {
-                    "bsonType": "objectId",
-                    "description": "Referencia (Llave foránea) al reporte asociado"
+                    "bsonType": "objectId"
                 },
                 "idPersona": {
-                    "bsonType": "objectId",
-                    "description": "Referencia (Llave foránea) al usuario destino"
+                    "bsonType": "objectId"
                 },
                 "mensaje": {
                     "bsonType": "string",
                     "maxLength": 500,
-                    "description": "Contenido del mensaje de alerta"
+                    "minLength": 0
                 },
                 "fechaEnvio": {
-                    "bsonType": "date",
-                    "description": "Fecha y hora de salida del mensaje"
+                    "bsonType": "date"
                 },
                 "leido": {
-                    "bsonType": "bool",
-                    "description": "Estado de lectura por el usuario (true/false)"
+                    "bsonType": "bool"
                 }
             },
             "additionalProperties": false
         }
     },
-    "validationLevel": "strict",
-    "validationAction": "error"
+    "validationLevel": "off",
+    "validationAction": "warn"
 });
- 
+
+
+
+
 db.createCollection("Categorias", {
     "capped": false,
     "validator": {
         "$jsonSchema": {
             "bsonType": "object",
             "title": "Categorias",
-            "required": ["nombreCategoria"],
             "properties": {
                 "_id": {
-                    "bsonType": "objectId",
-                    "description": "Identificador único de la categoría"
+                    "bsonType": "objectId"
+                },
+                "idCategoria": {
+                    "bsonType": "objectId"
                 },
                 "nombreCategoria": {
                     "bsonType": "string",
-                    "maxLength": 50,
-                    "description": "Nombre de la categoría principal"
+                    "maxLength": 50
                 },
                 "descripcion": {
                     "bsonType": "string",
-                    "maxLength": 500,
-                    "description": "Descripción del tipo de incidencias que engloba"
+                    "maxLength": 500
                 },
                 "subCategoria": {
                     "bsonType": "array",
+                    "additionalItems": true,
                     "items": {
                         "bsonType": "object",
-                        "required": ["idCategoria", "nombreCategoria"],
                         "properties": {
-                            "idCategoria": { "bsonType": "number" },
-                            "nombreCategoria": { "bsonType": "string" },
-                            "descripcion": { "bsonType": "string" }
+                            "idCategoria": {
+                                "bsonType": "number"
+                            },
+                            "nombreCategoria": {
+                                "bsonType": "string"
+                            },
+                            "descripcion": {
+                                "bsonType": "string"
+                            }
                         },
                         "additionalProperties": false
-                    },
-                    "description": "Subclasificaciones asociadas"
+                    }
                 }
             },
             "additionalProperties": false
         }
     },
-    "validationLevel": "strict",
-    "validationAction": "error"
+    "validationLevel": "off",
+    "validationAction": "warn"
 });
