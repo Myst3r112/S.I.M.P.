@@ -96,7 +96,7 @@ VALUES
 (1, '(01) 542-1234'), 
 (2, '(01) 614-1212'), 
 (3, '(01) 311-5000');
-
+GO
 INSERT INTO Correo_Municipalidad (id_municipalidad, correo) 
 VALUES 
 (1, 'consultas@municomas.gob.pe'), 

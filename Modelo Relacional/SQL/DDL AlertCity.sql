@@ -1,4 +1,3 @@
--- 2. Se crean las tablas independientes aña
 CREATE TABLE Municipalidad (
 	id_municipalidad INT           NOT NULL IDENTITY(1,1),
 	nombre           NVARCHAR(50)  NOT NULL,
@@ -45,7 +44,6 @@ CREATE TABLE Categoria_incidente (
     FOREIGN KEY (id_categoria_padre) REFERENCES Categoria_incidente (id_categoria)
 );
 GO
--- 3. Se crean tablas de primer nivel
 CREATE TABLE Telefono_Persona (
     id_telefono_per INT          NOT NULL IDENTITY(1,1),
     id_persona      INT          NOT NULL,
@@ -120,7 +118,6 @@ CREATE TABLE Personal_Tecnico (
     CONSTRAINT CK_Disponibilidad CHECK (disponibilidad IN (0,1))
 );
 GO
--- 4. Tablas Se crean tablas de segundo nivel
 CREATE TABLE Tecnico_Especialidad (
     id_persona_tecnico INT NOT NULL,
     id_especialidad    INT NOT NULL,
@@ -138,7 +135,6 @@ CREATE TABLE Ubicacion_Reporte (
   PRIMARY KEY (id_ubicacion)
 );
 GO
--- 5. TABLA CENTRAL DEL SISTEMA
 CREATE TABLE Reporte (
     id_reporte           INT           NOT NULL IDENTITY(1,1),
     id_categoria         INT           NOT NULL,
@@ -162,7 +158,6 @@ CREATE TABLE Reporte (
     CONSTRAINT CK_Reporte_es_anonimo CHECK (es_anonimo IN (0, 1))
 );
 GO
--- 6. Tablas transaccionales y de soporte (dependen del reporte)
 CREATE TABLE Historial_Estado_Reporte (
     id_historial       INT      NOT NULL IDENTITY(1,1),
     id_reporte         INT      NOT NULL,
